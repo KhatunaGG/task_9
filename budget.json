@@ -1,0 +1,9 @@
+[
+  {
+    "balance": 700,
+    "expenses": [
+      { "expense": 90, "type": "mobile" },
+      { "expense": 50, "type": "earphone" }
+    ]
+  }
+]
