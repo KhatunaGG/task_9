@@ -1,15 +1,10 @@
 #! /usr/bin/env node
+
 const { Command } = require("commander");
 const program = new Command();
 const fs = require("fs/promises");
 
 
-
-
-// Create a budget CLI tool where you can:
-// /Add a new expense./Delete an expense.
-// /Show all expenses.
-// /Use the fs module to save expense information.
 
 async function readData(filepath, isObject = false) {
   try {
@@ -35,7 +30,8 @@ program
   .argument("<balance>")
   .action(async (balance) => {
     const budgetInfo = [];
-    const info = { balance: Number(balance), expenses: [] }
+    const initBalance = balance;
+    const info = { initBalance: initBalance, balance: Number(balance), expenses: [] }
     budgetInfo.push(info)
     await writeData("budget.json", budgetInfo)
   });
@@ -55,6 +51,7 @@ program
       currentBudget.expenses.push({ expense: expenseAmount, type: type })
 
       const updatedBudget = {
+        ...currentBudget,
         balance: currentBudget.balance,
         expenses: currentBudget.expenses,
       };
@@ -76,7 +73,10 @@ program
       throw new Error({ message: "Expense not found" })
     }
     const deletedExpense = currentBudget.expenses.splice(index, 1)
-    await writeData("budget.json", [currentBudget]);
+    const deleteAmount = deletedExpense[0].expense
+    const updatedBalance = currentBudget.balance + deleteAmount
+    const newCurrenBudget = {...currentBudget, balance: updatedBalance, expenses: currentBudget.expenses}
+    await writeData("budget.json", [newCurrenBudget]);
     console.log({ message: "Done", deletedExpence: deletedExpense })
   });
 

@@ -1,9 +1,10 @@
 [
   {
-    "balance": 700,
+    "initBalance": "100",
+    "balance": 92,
     "expenses": [
-      { "expense": 90, "type": "mobile" },
-      { "expense": 50, "type": "earphone" }
+      { "expense": 5, "type": "cofee" },
+      { "expense": 3, "type": "tea" }
     ]
   }
 ]
